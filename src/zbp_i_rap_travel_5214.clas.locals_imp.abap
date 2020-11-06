@@ -502,6 +502,8 @@ CLASS lhc_Travel IMPLEMENTATION.
     COND #( when requested_authorizations-%update = if_abap_behv=>mk-on or
                  requested_authorizations-%action-acceptTravel = if_abap_behv=>mk-on or
                  requested_authorizations-%action-rejectTravel = if_abap_behv=>mk-on or
+                 requested_authorizations-%action-Prepare = if_abap_behv=>mk-on or
+                 requested_authorizations-%action-Edit = if_abap_behv=>mk-on or
                  requested_authorizations-%assoc-_Booking = if_abap_behv=>mk-on
 
              then abap_true else abap_false ).
@@ -522,6 +524,8 @@ CLASS lhc_Travel IMPLEMENTATION.
                     %update  = if_abap_behv=>auth-allowed
                     %action-acceptTravel = if_abap_behv=>auth-allowed
                     %action-rejectTravel = if_abap_behv=>auth-allowed
+                    %action-Prepare = if_abap_behv=>auth-allowed
+                    %action-Edit = if_abap_behv=>auth-allowed
                     %assoc-_Booking = if_abap_behv=>auth-allowed
                     %delete  = if_abap_behv=>auth-allowed
                       ) to result.
