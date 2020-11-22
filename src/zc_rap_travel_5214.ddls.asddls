@@ -9,11 +9,12 @@ define root view entity ZC_RAP_TRAVEL_5214
     key TravelUUID,
     @Search.defaultSearchElement: true
     TravelID,
-    @Consumption.valueHelpDefinition: [{ entity :{ name: '/DMO/I_Agency' , element : 'AgencyID'  } }]
-    @ObjectModel.text.element: ['AgencyName']
+//    @Consumption.valueHelpDefinition: [{ entity :{ name: '/DMO/I_Agency' , element : 'AgencyID'  } }]
+    @Consumption.valueHelpDefinition: [{ entity :{ name: 'zce_rap_agency_5214' , element : 'AgencyId'  } }]
+//    @ObjectModel.text.element: ['AgencyName']
     @Search.defaultSearchElement: true
     AgencyID,
-    _Agency.Name as AgencyName,
+//    _Agency.Name as AgencyName,
     @Consumption.valueHelpDefinition: [{ entity :{ name: '/DMO/I_Customer' , element : 'CustomerID'  } }]
     @ObjectModel.text.element: ['CustomerName']
     @Search.defaultSearchElement: true

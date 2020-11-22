@@ -12,7 +12,7 @@ ENDCLASS.
 
 
 
-CLASS zcl_generete_demo_data_5214 IMPLEMENTATION.
+CLASS ZCL_GENERETE_DEMO_DATA_5214 IMPLEMENTATION.
 
 
   METHOD if_oo_adt_classrun~main.
@@ -80,5 +80,4 @@ CLASS zcl_generete_demo_data_5214 IMPLEMENTATION.
 
 
   ENDMETHOD.
-
 ENDCLASS.

@@ -143,15 +143,66 @@ CLASS lhc_Travel IMPLEMENTATION.
     agencies = CORRESPONDING #( travels DISCARDING DUPLICATES MAPPING  agency_id = AgencyID EXCEPT * ).
     DELETE agencies WHERE agency_id IS INITIAL.
 
-    IF agencies IS NOT INITIAL.
-
-      SELECT FROM /dmo/agency FIELDS agency_id
-      FOR ALL ENTRIES IN @agencies
-      WHERE agency_id = @agencies-agency_id
-      INTO TABLE @DATA(agencies_db).
 
 
-    ENDIF.
+
+*    IF agencies IS NOT INITIAL.
+*
+*      SELECT FROM /dmo/agency FIELDS agency_id
+*      FOR ALL ENTRIES IN @agencies
+*      WHERE agency_id = @agencies-agency_id
+*      INTO TABLE @DATA(agencies_db).
+*
+*
+*    ENDIF.
+
+
+    data  filter_conditions type if_rap_query_filter=>tt_name_range_pairs.
+    data  ranges_table  type if_rap_query_filter=>tt_range_option.
+    data: business_data type table of zz_travel_agency_es5_5214.
+
+   if agencies is not INITIAL.
+
+      ranges_table = value #( FOR agency in agencies ( sign = 'I' option = 'EQ' low = agency-agency_id ) ).
+      filter_conditions = value #( (  name = 'AGENCYID' range = ranges_table  ) ).
+
+      try.
+
+          new zcl_ce_rap_agency_5214( )->get_agencies(
+            EXPORTING
+              filter_cond        = filter_conditions
+*              top                =
+*              skip               =
+              is_data_requested   =  'X'
+              is_count_requested  =  ' '
+              IMPORTING
+              business_data      = data(agencies_db)
+*              count              =
+          ).
+*          CATCH /iwbep/cx_cp_remote.
+*          CATCH /iwbep/cx_gateway.
+*          CATCH cx_web_http_client_error.
+*          CATCH cx_http_dest_provider_error.
+
+
+
+        catch cx_root into DATA(expception).
+
+
+
+      endtry.
+
+
+
+
+
+
+
+
+   endif.
+
+
+
 
     "Raise msg for non existing agencyID
     LOOP AT travels INTO DATA(travel).
@@ -161,7 +212,7 @@ CLASS lhc_Travel IMPLEMENTATION.
       TO reported-travel.
 
 
-      IF travel-AgencyID IS INITIAL OR NOT line_exists( agencies_db[ agency_id = travel-AgencyID ] ).
+      IF travel-AgencyID IS INITIAL OR NOT line_exists( agencies_db[ AgencyId  = travel-AgencyID ] ).
 
 
         APPEND VALUE #( %tky = travel-%tky ) TO failed-travel.

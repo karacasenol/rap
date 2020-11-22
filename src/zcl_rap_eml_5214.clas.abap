@@ -11,7 +11,9 @@ ENDCLASS.
 
 
 
-CLASS zcl_rap_eml_5214 IMPLEMENTATION.
+CLASS ZCL_RAP_EML_5214 IMPLEMENTATION.
+
+
   METHOD if_oo_adt_classrun~main.
 
      " step 1 - read
@@ -139,5 +141,4 @@ CLASS zcl_rap_eml_5214 IMPLEMENTATION.
 
 
   ENDMETHOD.
-
 ENDCLASS.
